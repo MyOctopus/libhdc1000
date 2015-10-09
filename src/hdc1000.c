@@ -70,7 +70,7 @@ int hdc1000_read(float *humidity, float *temperature) {
         return -1;
 
     *temperature = ((data[0] << 8) + data[1]) / DIV_TEMP - 40.0;
-    *humidity = ((data[2] << 8) + data[1]) / DIV_HUMIDITY;
+    *humidity = ((data[2] << 8) + data[3]) / DIV_HUMIDITY;
 
     DEBUG_LOG("hdc1000 data (temp): [%x %x] = %.4f\n", data[0], data[1], *temperature);
     DEBUG_LOG("hdc1000 data (humidity): [%x %x] = %.4f\n", data[2], data[3], *humidity);
