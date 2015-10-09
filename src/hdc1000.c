@@ -51,7 +51,10 @@ int hdc1000_init(const char *f_dev, unsigned char address) {
     if (ioctl(i2c_fd, I2C_SLAVE, address) < 0)
         return -1;
 
-    /* write config */
+    /* write config:
+     * - heater on (bit 13)
+     * - temperature and humidity acquisition mode (bit 12)
+     */
     r = write(i2c_fd, (unsigned char[]) {0x02, 0x30, 0x00}, 3);
     if (r != 1)
         return -1;
