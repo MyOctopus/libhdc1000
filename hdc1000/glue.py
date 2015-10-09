@@ -25,7 +25,7 @@ class Sensor(object):
     """
     def __init__(self, f_dev, address):
         """
-        Initialize pressure sensor and read its calibration coefficients.
+        Initialize pressure sensor.
 
         :param f_dev: I2C device filename, i.e. /dev/i2c-0.
         :param address: I2C device address, i.e. 0x77.
