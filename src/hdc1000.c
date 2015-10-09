@@ -60,6 +60,7 @@ int hdc1000_init(const char *f_dev, unsigned char address) {
         perror("i2c configuration error: ");
         return -1;
     }
+    usleep(15000); /* after possible power on */
 
     return 0;
 }
@@ -69,7 +70,7 @@ int hdc1000_read(float *humidity, float *temperature) {
     uint8_t data[4];
 
     write(i2c_fd, (uint8_t[]) {0x00}, 1);
-    usleep(15000); /* time needed for 14-bit conversion */
+    usleep(6350 * 2); /* time needed for 14-bit conversion */
     r = read(i2c_fd, data, 4);
     if (r != 4)
         return -1;
