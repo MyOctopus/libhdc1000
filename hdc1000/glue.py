@@ -32,8 +32,8 @@ class Sensor(object):
         """
         self._lib = ct.CDLL('libhdc1000.so.0')
         self._lib.hdc1000_init(f_dev.encode(), address)
-        self._p_value = ct.c_int()
-        self._t_value = ct.c_int()
+        self._p_value = ct.c_float()
+        self._t_value = ct.c_float()
 
 
     def read(self):
