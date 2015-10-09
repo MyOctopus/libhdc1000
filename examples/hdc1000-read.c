@@ -25,12 +25,18 @@
 int main() {
     float humidity, temp;
     time_t t;
-    hdc1000_init("/dev/i2c-1", 0x43);
+    int r;
+
+    r = hdc1000_init("/dev/i2c-1", 0x43);
+    if (r != 0) {
+        perror("cannot initialize i2c device: ");
+        return -1;
+    }
 
     while (1) {
         time(&t);
-        hdc1000_read(&humidity, &temp);
-        printf("%d: %.4f%% %.4fC\n", t, humidity, temp);
+        r = hdc1000_read(&humidity, &temp);
+        printf("%d: %.4f%% %.4fC (err=%d)\n", t, humidity, temp, r);
         sleep(1);
     }
     return 0;
