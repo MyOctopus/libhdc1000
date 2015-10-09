@@ -20,11 +20,11 @@
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
 #ifdef HDC1000_DEBUG
-#include <stdio.h>
 #define DEBUG_LOG(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__)
 #else
 #define DEBUG_LOG(fmt, ...)
@@ -55,9 +55,11 @@ int hdc1000_init(const char *f_dev, unsigned char address) {
      * - heater on (bit 13)
      * - temperature and humidity acquisition mode (bit 12)
      */
-    r = write(i2c_fd, (unsigned char[]) {0x02, 0x30, 0x00}, 3);
-    if (r != 1)
+    r = write(i2c_fd, (uint8_t[]) {0x02, 0x30, 0x00}, 3);
+    if (r != 3) {
+        perror("i2c configuration error: ");
         return -1;
+    }
 
     return 0;
 }
@@ -66,7 +68,7 @@ int hdc1000_read(float *humidity, float *temperature) {
     int r;
     uint8_t data[4];
 
-    write(i2c_fd, (unsigned char[]) {0x00}, 1);
+    write(i2c_fd, (uint8_t[]) {0x00}, 1);
     usleep(15000); /* time needed for 14-bit conversion */
     r = read(i2c_fd, data, 4);
     if (r != 4)
