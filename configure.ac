@@ -7,4 +7,4 @@ LT_INIT
 AC_PROG_CC
 AM_PROG_CC_C_O
 
-AC_OUTPUT([Makefile src/Makefile])
+AC_OUTPUT([Makefile src/Makefile examples/Makefile])
