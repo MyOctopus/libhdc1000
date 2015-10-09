@@ -33,7 +33,7 @@ int hdc1000_init(const char *f_dev, unsigned char address);
 /*!
  * \brief Read humidity and temperature from HDC1000 sensor.
  *
- * \param humidity Relative humidity as percentage).
+ * \param humidity Relative humidity (as percentage).
  * \param temperature Temperature in Celsius.
  */
 int hdc1000_read(float *humidity, float *temperature);
