@@ -75,6 +75,29 @@ int hdc1000_read(float *humidity, float *temperature) {
     if (r != 4)
         return -1;
 
+    /*
+     * TODO: or use one i2c transaction; at the moment read fails with EREMOTEIO
+     *
+     *  struct i2c_rdwr_ioctl_data i2c_data;
+     *  struct i2c_msg msg[2];
+     *  uint8_t data[4];
+
+     *  msg[0].addr = 0x43;
+     *  msg[0].flags = 0;
+     *  msg[0].len = 1;
+     *  msg[0].buf = (uint8_t[]) {0x00};
+
+     *  msg[1].addr = 0x43;
+     *  msg[1].flags = I2C_M_RD;
+     *  msg[1].len = 0;
+     *  msg[1].buf = data;
+
+     *  i2c_data.msgs = msg;
+     *  i2c_data.nmsgs = 2;
+
+     *  r = ioctl(i2c_fd, I2C_RDWR, &i2c_data);
+     */
+
     *temperature = ((data[0] << 8) + data[1]) / DIV_TEMP - 40.0;
     *humidity = ((data[2] << 8) + data[3]) / DIV_HUMIDITY;
 
